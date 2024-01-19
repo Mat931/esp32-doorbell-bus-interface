@@ -3,6 +3,9 @@ This device allows you to integrate your ABB-Welcome or Busch-Welcome 2-wire doo
 
 [How to order](https://github.com/Mat931/esp32-doorbell-bus-interface/blob/main/how_to_order.md)
 
+[How to flash with ESPHome](https://github.com/Mat931/esp32-doorbell-bus-interface/blob/main/how_to_flash.md)
+
+
 ### Example applications
 - Get notified when someone rings your doorbell
 - Open your front door using your smartphone
