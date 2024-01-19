@@ -1,6 +1,8 @@
 # ESP32 Bus Interface for ABB-Welcome and Busch-Welcome 
 This device allows you to integrate your ABB-Welcome or Busch-Welcome 2-wire doorbell intercom system into Home Assistant. Features include doorbell notifications and remotely opening your door. You can order the fully assembled board from a PCB manufacturer.
 
+[How to order](https://github.com/Mat931/esp32-doorbell-bus-interface/blob/main/how_to_order.md)
+
 ### Example applications
 - Get notified when someone rings your doorbell
 - Open your front door using your smartphone
