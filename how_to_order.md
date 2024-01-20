@@ -1,6 +1,6 @@
 ## How to order
 
-### JLCPCB (with assembly)
+### JLCPCB with assembly:
 
 - Go to https://jlcpcb.com/quote/
 - Upload the [Gerber file](https://github.com/Mat931/esp32-doorbell-bus-interface/tree/main/fabrication)
@@ -20,3 +20,7 @@
 - Click `Next` twice
 - Select a product description, for example `Research/Education/DIY/Entertainment` and `Development Board`
 - Save to cart
+
+### What you will receive (Example):
+
+ ![PCB image](https://github.com/Mat931/esp32-doorbell-bus-interface/blob/main/images/4.png)
