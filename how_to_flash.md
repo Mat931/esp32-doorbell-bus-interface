@@ -181,6 +181,10 @@ For flashing you need a USB-to-serial adapter that supports 3.3V and has the req
 
 If your USB-to-serial adapter can't supply enough power to flash the ESP32 you can disconnect `3V3` and connect an external power supply (12-30V DC) to the `BUS+` and `BUS-` pins.
 
+ ![PCB image](https://github.com/Mat931/esp32-doorbell-bus-interface/blob/main/images/5.png)
+
 ## Installation
 
 Before connecting the device to the ABB-Welcome bus it is recommended to check the bus voltage. It should be between 20V and 30V DC. Above 36V the device can take damage. Connect the positive wire to `BUS+` and the negative wire to `BUS-`. If the TX LED lights up continuously after connecting you should disconnect the wires and check your yaml configuration. The device has protection against reverse polarity and a resettable fuse.
+
+Note: You are responsible for connecting the device to your system and for the firmware you upload. The author of this project takes no responsibility for any damages.
