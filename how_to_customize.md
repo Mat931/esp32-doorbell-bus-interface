@@ -6,8 +6,8 @@ After uploading the [basic configuration](https://github.com/Mat931/esp32-doorbe
 - Alternatively after connecting the board to Home Assistant you can use the debug sensor named `Doorbell Intercom` for long-term observation of received messages.
 - Received messages are structured like this:
   - `55.FF.XX...XX (10)`: Raw data in hexadecimal format and message length.
-  - `[XXXX > XXXX]`: Source and destination addresses, `»` means the message is a retransmission. If you see six characters (`XXXXXX`) instead of four your system is using three-byte addresses. When transmitting messages you need to add `three_byte_address: true` in the ESPHome config.
-  - `Type: XX`: Message type, if it's 0x80 or above then the message is a reply. For example if the initial message has type `01` then the reply type will be `81`.
+  - `[XXXX > XXXX]`: Source and destination addresses, `»` means the message is a retransmission. If you see six characters (`XXXXXX`) instead of four your system is using three-byte addresses. When transmitting messages you need to add `three_byte_address: true` in the ESPHome config. More info about addresses is available [here](https://github.com/Mat931/esp32-doorbell-bus-interface/wiki/Address-Types).
+  - `Type: XX`: Message type, if it's 0x80 or above then the message is a reply. For example if the initial message has type `01` then the reply type will be `81`. More info about message types is available [here](https://github.com/Mat931/esp32-doorbell-bus-interface/wiki/Message-Types).
   - `Data: XX` Data attached to the message (optional). The meaning of the data depends on the message type.
 
 ## Receiving doorbell notifications
