@@ -67,6 +67,7 @@ on_...:
   - remote_transmitter.transmit_abbwelcome:
       source_address: 0x100c # your indoor station address
       destination_address: 0x4001 # door address
+      three_byte_address: false # address length of your system
       message_type: 0x0d # unlock door
       data: [0xab, 0xcd, 0xef] # message data
 ```
