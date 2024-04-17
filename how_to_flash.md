@@ -23,11 +23,10 @@ esphome:
         id: doorbell_outdoor
         state: OFF
 
-# Only required until https://github.com/esphome/esphome/pull/4642 and
-# https://github.com/esphome/esphome/pull/4689 are merged into ESPHome
+# Only required until https://github.com/esphome/esphome/pull/4642 is merged into ESPHome
 external_components:
-  - source: github://Mat931/esphome@remote
-    components: [ remote_base, remote_receiver ]
+  - source: github://pr#4642
+    components: [remote_base, remote_receiver]
 
 wifi:
   networks:
@@ -54,7 +53,9 @@ remote_receiver:
       input: True
   dump: [abbwelcome]
   filter: 8us
-  tolerance: 26us
+  tolerance:
+    mode: time
+    value: 26us
   idle: 1500us
   buffer_size: 15kB
   memory_blocks: 5
