@@ -54,6 +54,8 @@ remote_receiver:
     value: 26us
   idle: 1500us
   buffer_size: 15kB
+  rmt_symbols: 320
+  clock_resolution: 500000
   on_abbwelcome:
     then:
       - lambda: 'id(doorbell_intercom).publish_state(x.to_string().c_str());'
