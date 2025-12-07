@@ -40,6 +40,7 @@ ota:
 remote_transmitter:
   pin: GPIO26
   carrier_duty_percent: 100%
+  non_blocking: true
 
 remote_receiver:
   pin:
@@ -159,7 +160,9 @@ button:
           data: [0x00]
 
 status_led:
-  pin: GPIO2
+  pin:
+    number: GPIO2
+    ignore_strapping_warning: true
 ```
 
 ## Flashing
