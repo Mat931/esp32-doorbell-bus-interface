@@ -170,7 +170,7 @@ status_led:
 
 ## Flashing
 
-For flashing you need a USB-to-serial adapter that supports 3.3V and has the required pins. The board includes an auto-reset circuit so you don't need to manually ground GPIO0 or press any buttons during flashing. The rest of the flashing process is identical to other ESP32 and ESPHome devices.
+For flashing you need a USB-to-serial adapter that supports 3.3V and has the required pins. The board includes an auto-reset circuit so you don't need to manually ground GPIO0 or press any buttons during flashing if you have an adapter with DTR and RTS. If not, you need to manually ground GPIO0. The rest of the flashing process is identical to other ESP32 and ESPHome devices.
 
 | USB-to-serial adapter | Programming header of the board |
 | --------------------- | ------------------------------- |
