@@ -5,13 +5,12 @@
 - Go to https://cart.jlcpcb.com/quote
 - Upload the [Gerber file](https://github.com/Mat931/esp32-doorbell-bus-interface/tree/main/fabrication)
 - Choose a color and thickness combination that is compatible with assembly (Recommended is green and 1.6mm, more info at https://jlcpcb.com/capabilities/pcb-assembly-capabilities)
-- Select `Remove Order Number: Specify a location`
+- Optional: Select `Mark on PCB: Order Number (Specify Position)`
 - Scroll down to `PCB Assembly` and turn on the switch
 - Make sure `Economic` and `Top Side` are selected
 - Select `Quantity (PCBA Qty): 2` or `5` depending on how many assembled boards you want to order
 - Select `Tooling holes: Added by Customer`
-- Under `Assembly` - `Advanced Options` edit the remark and add the text `P1 orientation is correct`
-- Click the blue `Confirm` button
+- Under `Assembly` - `Advanced Options` select `PCBA remark: Yes` remark and add the text `P1 orientation is correct` and click `Save`
 - Click `Next`
 - Upload the [BOM and CPL files](https://github.com/Mat931/esp32-doorbell-bus-interface/tree/main/fabrication)
 - Click `Process BOM & CPL`
