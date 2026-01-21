@@ -2,7 +2,7 @@
 
 ### JLCPCB with assembly:
 
-- Go to [https://jlcpcb.com/quote/](https://cart.jlcpcb.com/quote)
+- Go to https://cart.jlcpcb.com/quote
 - Upload the [Gerber file](https://github.com/Mat931/esp32-doorbell-bus-interface/tree/main/fabrication)
 - Choose a color and thickness combination that is compatible with assembly (Recommended is green and 1.6mm, more info at https://jlcpcb.com/capabilities/pcb-assembly-capabilities)
 - Select `Remove Order Number: Specify a location`
