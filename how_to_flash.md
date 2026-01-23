@@ -10,8 +10,8 @@ esp32:
       CONFIG_FREERTOS_UNICORE: y # Only required if you have a single core ESP32
 
 esphome:
-  name: abb-welcome-demo
-  friendly_name: "ABB Welcome Demo"
+  name: esp32-busch-bus
+  friendly_name: "esp32-busch-bus"
   on_boot:
     - lock.template.publish:
         id: front_door
@@ -35,8 +35,8 @@ api:
     key: !secret api_encryption_key
 
 ota:
-  - platform: esphome
-    password: !secret ota_password
+ - platform: esphome
+   password: !secret ota_password
 
 remote_transmitter:
   pin: GPIO26
@@ -55,11 +55,14 @@ remote_receiver:
     value: 26us
   idle: 1500us
   buffer_size: 15kB
-  rmt_symbols: 320
-  clock_resolution: 500000
+  #memory_blocks: 5
+  #clock_divider: 160
   on_abbwelcome:
     then:
-      - lambda: 'id(doorbell_intercom).publish_state(x.to_string().c_str());'
+      - lambda: |-
+          char buf[32];
+          sprintf(buf, "S:0x%04X, D:0x%04X, T:0x%02X", x.get_source_address(), x.get_destination_address(), x.get_message_type());
+          id(doorbell_intercom).publish_state(buf);           
       - if:
           condition:
             and:
@@ -145,7 +148,7 @@ lock:
               destination_address: 0x4001 # door address
               three_byte_address: false # address length of your system
               message_type: 0x0d # unlock door
-              data: [0xab, 0xcd, 0xef]  # door opener secret code, see receiver dump
+              data: [0x24, 0xE1, 0x44]  # door opener secret code, see receiver dump
 
 button:
   - platform: restart
@@ -163,9 +166,7 @@ button:
           data: [0x00]
 
 status_led:
-  pin:
-    number: GPIO2
-    ignore_strapping_warning: true
+  pin: GPIO2
 ```
 
 ## Flashing
