@@ -148,7 +148,7 @@ lock:
               destination_address: 0x4001 # door address
               three_byte_address: false # address length of your system
               message_type: 0x0d # unlock door
-              data: [0x24, 0xE1, 0x44]  # door opener secret code, see receiver dump
+              data: [0xab, 0xcd, 0xef]  # door opener secret code, see receiver dump
 
 button:
   - platform: restart
