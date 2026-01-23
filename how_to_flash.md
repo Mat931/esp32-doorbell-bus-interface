@@ -10,8 +10,8 @@ esp32:
       CONFIG_FREERTOS_UNICORE: y # Only required if you have a single core ESP32
 
 esphome:
-  name: esp32-busch-bus
-  friendly_name: "esp32-busch-bus"
+  name: abb-welcome-demo
+  friendly_name: "ABB Welcome Demo"
   on_boot:
     - lock.template.publish:
         id: front_door
@@ -35,8 +35,8 @@ api:
     key: !secret api_encryption_key
 
 ota:
- - platform: esphome
-   password: !secret ota_password
+  - platform: esphome
+    password: !secret ota_password
 
 remote_transmitter:
   pin: GPIO26
