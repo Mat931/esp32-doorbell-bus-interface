@@ -17,5 +17,6 @@ This device allows you to integrate your ABB-Welcome or Busch-Welcome 2-wire doo
 ### Limitations
 - Only works with 2-wire systems, not ABB-Welcome IP
 - Audio and video is not supported by this hardware
+- May decrease the audio and video quality
 
  ![PCB image](https://github.com/Mat931/esp32-doorbell-bus-interface/blob/main/images/1.png)
