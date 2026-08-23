@@ -33,6 +33,8 @@ logger:
 api:
   encryption:
     key: !secret api_encryption_key
+  batch_delay: 0ms   # send each bus message individually, otherwise the
+                     # debug text sensor only shows the last message per 100 ms
 
 ota:
   - platform: esphome
