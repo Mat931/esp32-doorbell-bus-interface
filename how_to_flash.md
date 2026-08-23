@@ -16,12 +16,6 @@ esphome:
     - lock.template.publish:
         id: front_door
         state: LOCKED
-    - binary_sensor.template.publish:
-        id: doorbell_indoor
-        state: OFF
-    - binary_sensor.template.publish:
-        id: doorbell_outdoor
-        state: OFF
 
 wifi:
   networks:
@@ -81,12 +75,9 @@ remote_receiver:
               - lambda: "return (x.get_message_type() == 0x11);" # doorbell indoor
               - lambda: "return (x.get_source_address() == 0x1001);" # your indoor station address
           then:
-            - binary_sensor.template.publish:
+            - event.trigger:
                 id: doorbell_indoor
-                state: ON
-            - binary_sensor.template.publish:
-                id: doorbell_indoor
-                state: OFF
+                event_type: press
       - if:
           condition:
             and:
@@ -94,26 +85,21 @@ remote_receiver:
               - lambda: "return (x.get_source_address() == 0x2001);" # outdoor station address
               - lambda: "return (x.get_destination_address() == 0x1001);" # your indoor station address
           then:
-            - binary_sensor.template.publish:
+            - event.trigger:
                 id: doorbell_outdoor
-                state: ON
-            - binary_sensor.template.publish:
-                id: doorbell_outdoor
-                state: OFF
+                event_type: press
 
-binary_sensor:
+events:
   - platform: template
     name: Doorbell indoor
     id: doorbell_indoor
-    icon: mdi:bell
-    filters:
-      - delayed_off: 1s
+    device_class: doorbell
+    event_types: [press]
   - platform: template
     name: Doorbell outdoor
     id: doorbell_outdoor
-    icon: mdi:bell
-    filters:
-      - delayed_off: 1s
+    device_class: doorbell
+    event_types: [press]
 
 sensor:
   - platform: internal_temperature
