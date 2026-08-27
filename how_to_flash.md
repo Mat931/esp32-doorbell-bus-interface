@@ -2,6 +2,15 @@ The ESP32 on this board must be programmed with a firmware like [ESPHome](https:
 
 ## ESPHome Example Configuration
 ```yaml
+substitutions:
+  device_name: abb-welcome-demo
+  friendly_name: "ABB Welcome Demo"
+  # check https://github.com/Mat931/esp32-doorbell-bus-interface/blob/main/how_to_customize.md to get the correct values for your system
+  indoor_station_address: 0x1001  # your indoor station address
+  outdoor_station_address: 0x2001 # outdoor station address
+  outdoor_door_address: 0x4001    # outdoor door address
+  three_byte_address_bool: false  # address length of your system
+
 esp32:
   board: esp32dev
   framework:
@@ -10,8 +19,8 @@ esp32:
       CONFIG_FREERTOS_UNICORE: y # Only required if you have a single core ESP32
 
 esphome:
-  name: abb-welcome-demo
-  friendly_name: "ABB Welcome Demo"
+  name: ${device_name}
+  friendly_name: ${friendly_name}
   on_boot:
     - lock.template.publish:
         id: front_door
@@ -66,7 +75,7 @@ remote_receiver:
           condition:
             and:
               - lambda: "return (x.get_message_type() == 0x8d);" # unlock door response
-              - lambda: "return (x.get_source_address() == 0x4001);" # door address
+              - lambda: "return (x.get_source_address() == ${outdoor_door_address});"
           then:
             - lock.template.publish:
                 id: front_door
@@ -79,7 +88,7 @@ remote_receiver:
           condition:
             and:
               - lambda: "return (x.get_message_type() == 0x11);" # doorbell indoor
-              - lambda: "return (x.get_source_address() == 0x1001);" # your indoor station address
+              - lambda: "return (x.get_source_address() == ${indoor_station_address});"
           then:
             - binary_sensor.template.publish:
                 id: doorbell_indoor
@@ -91,8 +100,8 @@ remote_receiver:
           condition:
             and:
               - lambda: "return (x.get_message_type() == 0x01);" # doorbell outdoor
-              - lambda: "return (x.get_source_address() == 0x2001);" # outdoor station address
-              - lambda: "return (x.get_destination_address() == 0x1001);" # your indoor station address
+              - lambda: "return (x.get_source_address() == ${outdoor_station_address});"
+              - lambda: "return (x.get_destination_address() == ${indoor_station_address});"
           then:
             - binary_sensor.template.publish:
                 id: doorbell_outdoor
@@ -143,9 +152,9 @@ lock:
     unlock_action:
       - then:
           - remote_transmitter.transmit_abbwelcome:
-              source_address: 0x1001 # your indoor station address
-              destination_address: 0x4001 # door address
-              three_byte_address: false # address length of your system
+              source_address: ${indoor_station_address}
+              destination_address: ${outdoor_door_address}
+              three_byte_address: ${three_byte_address_bool}
               message_type: 0x0d # unlock door
               data: [0xab, 0xcd, 0xef] # door opener secret code, see receiver dump
 
@@ -158,9 +167,9 @@ button:
     name: "Stop Doorbell"
     on_press:
       - remote_transmitter.transmit_abbwelcome:
-          source_address: 0x1001 # your indoor station address
-          destination_address: 0x2001 # outdoor station address
-          three_byte_address: false # address length of your system
+          source_address: ${indoor_station_address}
+          destination_address: ${outdoor_station_address}
+          three_byte_address: ${three_byte_address_bool}
           message_type: 0x02 # end call (stops your doorbell ringtone)
           data: [0x00]
 

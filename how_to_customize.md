@@ -22,12 +22,12 @@ After uploading the [basic configuration](https://github.com/Mat931/esp32-doorbe
       - if:
           condition:
             or:
-              # Type 01, Outdoor Station (0x2001) > Indoor Station #12 (0x100c)
-              - lambda: 'return (x.get_message_type() == 0x01) && (x.get_source_address() == 0x2001) && (x.get_destination_address() == 0x100c);'
-              # Type 81, Indoor Station #12 (0x100c) > Outdoor Station (0x2001)
-              - lambda: 'return (x.get_message_type() == 0x81) && (x.get_source_address() == 0x100c) && (x.get_destination_address() == 0x2001);'
-              # Type 0a, Outdoor Station (0x2001) > Gateway (0x3001), Data contains indoor station address (0x10, 0x0c)
-              - lambda: 'std::vector<uint8_t> d = {0x01, 0x10, 0x0c}; return (x.get_message_type() == 0x0A) && (x.get_source_address() == 0x2001) && (x.get_destination_address() == 0x3001) && (x.get_data() == d);'
+              # Type 01, Outdoor Station (0x2001) > Indoor Station
+              - lambda: 'return (x.get_message_type() == 0x01) && (x.get_source_address() == ${outdoor_station_address}) && (x.get_destination_address() == ${indoor_station_address});'
+              # Type 81, Indoor Station > Outdoor Station (0x2001)
+              - lambda: 'return (x.get_message_type() == 0x81) && (x.get_source_address() == ${indoor_station_address}) && (x.get_destination_address() == ${outdoor_station_address});'
+              # Type 0a, Outdoor Station > Gateway (0x3001), Data contains indoor station address (0x10, 0x0c)
+              - lambda: 'std::vector<uint8_t> d = {0x01, 0x10, 0x0c}; return (x.get_message_type() == 0x0A) && (x.get_source_address() == ${outdoor_station_address}) && (x.get_destination_address() == 0x3001) && (x.get_data() == d);'
           then:
           - binary_sensor.template.publish:
               id: doorbell_outdoor
@@ -43,10 +43,10 @@ After uploading the [basic configuration](https://github.com/Mat931/esp32-doorbe
       - if:
           condition:
             or:
-              # Type 11, Source: Indoor Station (0x100C)
-              - lambda: 'return (x.get_message_type() == 0x11) && (x.get_source_address() == 0x100c);'
-              # Type 91, Destination: Indoor Station (0x100C)
-              - lambda: 'return (x.get_message_type() == 0x91) && (x.get_destination_address() == 0x100c);'
+              # Type 11, Source: Indoor Station
+              - lambda: 'return (x.get_message_type() == 0x11) && (x.get_source_address() == ${indoor_station_address});'
+              # Type 91, Destination: Indoor Station
+              - lambda: 'return (x.get_message_type() == 0x91) && (x.get_destination_address() == ${indoor_station_address});'
           then:
           - binary_sensor.template.publish:
               id: doorbell_indoor
@@ -65,9 +65,9 @@ After uploading the [basic configuration](https://github.com/Mat931/esp32-doorbe
 ```yaml
 on_...:
   - remote_transmitter.transmit_abbwelcome:
-      source_address: 0x100c # your indoor station address
-      destination_address: 0x4001 # door address
-      three_byte_address: false # address length of your system
+      source_address: ${indoor_station_address}
+      destination_address: ${outdoor_station_address}
+      three_byte_address:  ${three_byte_address_bool}
       message_type: 0x0d # unlock door
       data: [0xab, 0xcd, 0xef] # message data
 ```
@@ -79,7 +79,7 @@ on_...:
           condition:
             and:
               - lambda: 'return (x.get_message_type() == 0x8d);' # Door opener response
-              - lambda: 'return (x.get_source_address() == 0x4001);' # Door address
+              - lambda: 'return (x.get_source_address() == ${outdoor_door_address});'
           then:
           - lock.template.publish:
               id: main_door
